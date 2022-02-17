@@ -30,6 +30,7 @@ export const deleteNote = async (noteId: string) => {
 }
 
 export const getNote =async (noteId:string)=>{
+    console.log('adding a new stuff')
     let note;
     try {
         note = await getNoteService(noteId);
