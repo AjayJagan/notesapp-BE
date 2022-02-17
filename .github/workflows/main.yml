@@ -38,7 +38,6 @@ jobs:
       - name: Installing dependencies
         run: |
           yarn install
-          yarn ci
           
   push_to_Docker: 
     # The type of runner that the job will run on
@@ -49,7 +48,7 @@ jobs:
     steps:
     
       - name: checkout repo
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       
       - name: set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -66,15 +65,15 @@ jobs:
       - name: build and push image
         uses: docker/build-push-action@v2
         with:
-          context: ../../../.
+          context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nodejs-demo:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/notesapp-be:latest
           
       - name: Run the image in a container
         uses: addnab/docker-run-action@v3
         with:
-          image: ${{ secrets.DOCKERHUB_USERNAME }}/nodejs-demo:latest
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/notesapp-be:latest
           run: echo ${{ steps.docker_build.outputs.digest }}
           
           
