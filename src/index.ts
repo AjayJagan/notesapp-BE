@@ -48,9 +48,10 @@ app.get('/getNote/:noteId',async (req,res)=>{
         res.status(400).send(e.message)
     }
 })
-mongoose.connect("mongodb://mongo-server:27017/NoteDB"); // can use mongo-server name for docker-compose(internal network)
 
-app.listen(3000, () => {
-    console.log('The application is listening on port 3000!');
+mongoose.connect(`mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DB_NAME}`); // can use mongo-server name for docker-compose(internal network)
+
+app.listen(process.env.SERVER_PORT, () => {
+    console.log(`The application is listening on port ${process.env.SERVER_PORT}!`);
 })
 
